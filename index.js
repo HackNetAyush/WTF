@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
+
 const {
   GoogleGenerativeAI,
   HarmCategory,
@@ -13,7 +15,8 @@ app.use(cors());
 const MODEL_NAME = "gemini-1.0-pro";
 const API_KEY = process.env.API_KEY;
 
-async function runChat(api, userInput) {
+async function runChat(userInput) {
+  console.log(API_KEY);
   const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
@@ -62,7 +65,7 @@ async function runChat(api, userInput) {
 app.get("/message", async (req, res) => {
   const userInput = req.query.input; // Change to req.body.input if sending input in the request body
   try {
-    const chatResponse = await runChat(API, userInput);
+    const chatResponse = await runChat(userInput);
     res.json({ message: chatResponse });
   } catch (error) {
     console.error("Error:", error);
