@@ -11,10 +11,10 @@ app.use(express.json()); // Parse JSON requests
 app.use(cors());
 
 const MODEL_NAME = "gemini-1.0-pro";
-// const API_KEY = "AIzaSyCmeFeG8eVBM_x0zYxrYWx0W9A-RMHlRig";
+const API_KEY = process.env.API_KEY;
 
 async function runChat(api, userInput) {
-  const genAI = new GoogleGenerativeAI(api);
+  const genAI = new GoogleGenerativeAI(API_KEY);
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
   const generationConfig = {
@@ -59,8 +59,7 @@ async function runChat(api, userInput) {
   return response.text();
 }
 
-app.get("/:api/message", async (req, res) => {
-  const API = req.params.api;
+app.get("/message", async (req, res) => {
   const userInput = req.query.input; // Change to req.body.input if sending input in the request body
   try {
     const chatResponse = await runChat(API, userInput);
