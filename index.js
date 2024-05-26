@@ -52,8 +52,8 @@ async function runChat(userInput) {
     history: [],
   });
 
-  const instructions =
-    " \n Only provide me code, don't explain if I have not mentioned 'explain' ";
+  //const instructions = " \n Only provide me code, don't explain if I have not mentioned 'explain' ";
+  const instructions = "Please answer this question. Choose the appropriate option if provided.";
 
   var completeMsg = userInput + instructions;
 
